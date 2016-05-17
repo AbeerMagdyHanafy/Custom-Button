@@ -1,0 +1,74 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: "com.github.dcendents.android-maven"
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 2
+        versionName "1.0.3"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.1'
+
+}
+
+
+group = 'com.example.abeer.component'
+version = '1.0.3'
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+task generateJavaDocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+}
+
+task generateJavaDocsJar(type: Jar) {
+    from generateJavaDocs.destinationDir
+    classifier 'javadoc'
+}
+generateJavaDocsJar.dependsOn generateJavaDocs
+
+bintray {
+    user = 'abeermagdy'
+    key = '70826477e44ef1c2bfcbfe67f78c954982339272'
+    pkg {
+        repo = 'maven'
+        name = 'com.example.abeer.customview'
+
+        version {
+            name = '1.0.3-tuts'
+            desc = 'My test upload'
+            released  = new Date()
+            vcsTag = '1.0.3'
+        }
+
+        licenses = ['Apache-2.0']
+        vcsUrl = 'https://github.com/AbeerMagdyHanafy/Custom-Button.git'
+        websiteUrl = 'https://github.com/AbeerMagdyHanafy/Custom-Button'
+    }
+    configurations = ['archives']
+}
+
+artifacts {
+    archives generateJavaDocsJar
+    archives generateSourcesJar
+}
