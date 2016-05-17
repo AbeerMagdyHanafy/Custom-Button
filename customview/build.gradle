@@ -28,7 +28,7 @@ dependencies {
 
 
 group = 'com.example.abeer.component'
-version = '1.0.3'
+version = '1.0.4'
 
 task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -55,10 +55,10 @@ bintray {
         name = 'com.example.abeer.customview'
 
         version {
-            name = '1.0.3-tuts'
+            name = '1.0.4-tuts'
             desc = 'My test upload'
             released  = new Date()
-            vcsTag = '1.0.3'
+            vcsTag = '1.0.4'
         }
 
         licenses = ['Apache-2.0']
